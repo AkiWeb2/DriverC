@@ -1,0 +1,9 @@
+﻿  Building 'KMDFTest' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Stamping x64\Release\KMDFTest.inf
+  Stamping [Version] section with DriverVer=03/14/2024,23.3.29.500
+  driver.c
+  KMDFTest.vcxproj -> C:\Users\AkiWeb\Desktop\KMDFTest\x64\Release\KMDFTest.sys
+  Done Adding Additional Store
+  Successfully signed: C:\Users\AkiWeb\Desktop\KMDFTest\x64\Release\KMDFTest.sys
+  
+  Driver is 'Universal'.

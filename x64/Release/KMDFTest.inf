@@ -1,0 +1,80 @@
+;
+; KMDFTest.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System ; TODO: specify appropriate Class
+ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318} ; TODO: specify appropriate ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=KMDFTest.cat
+DriverVer = 03/14/2024,23.3.29.500
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+KMDFTest_Device_CoInstaller_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+KMDFTest.sys  = 1,,
+;
+
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%KMDFTest.DeviceDesc%=KMDFTest_Device, Root\KMDFTest ; TODO: edit hw-id
+
+[KMDFTest_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+KMDFTest.sys
+
+;-------------- Service installation
+[KMDFTest_Device.NT.Services]
+AddService = KMDFTest,%SPSVCINST_ASSOCSERVICE%, KMDFTest_Service_Inst
+
+; -------------- KMDFTest driver install sections
+[KMDFTest_Service_Inst]
+DisplayName    = %KMDFTest.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\KMDFTest.sys
+
+;
+;--- KMDFTest_Device Coinstaller installation ------
+;
+
+[KMDFTest_Device.NT.CoInstallers]
+AddReg=KMDFTest_Device_CoInstaller_AddReg
+CopyFiles=KMDFTest_Device_CoInstaller_CopyFiles
+
+[KMDFTest_Device_CoInstaller_AddReg]
+;
+
+
+[KMDFTest_Device_CoInstaller_CopyFiles]
+;
+
+
+[KMDFTest_Device.NT.Wdf]
+KmdfService =  KMDFTest, KMDFTest_wdfsect
+[KMDFTest_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+DiskName = "KMDFTest Installation Disk"
+KMDFTest.DeviceDesc = "KMDFTest Device"
+KMDFTest.SVCDESC = "KMDFTest Service"
